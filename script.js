@@ -314,15 +314,48 @@ function showMessages() {
               duration: 1500,
               easing: 'easeOutElastic(1, .8)',
               complete: () => {
-                // Add continuous floating to second message
+                // Add floating animation to second message
                 anime({
                   targets: '#message2',
                   translateY: [-8, 8],
                   duration: 3000,
                   direction: 'alternate',
-                  loop: true,
+                  loop: 3,
                   easing: 'easeInOutSine',
                 });
+                
+                setTimeout(() => {
+                  // Fade out second message
+                  anime({
+                    targets: '#message2',
+                    opacity: [1, 0],
+                    scale: [1, 0.8],
+                    duration: 1000,
+                    easing: 'easeInQuad',
+                    complete: () => {
+                      // Show third message
+                      anime({
+                        targets: '#message3',
+                        opacity: [0, 1],
+                        scale: [0.5, 1],
+                        rotateX: [90, 0],
+                        duration: 1500,
+                        easing: 'easeOutElastic(1, .8)',
+                        complete: () => {
+                          // Add continuous floating to third message
+                          anime({
+                            targets: '#message3',
+                            translateY: [-8, 8],
+                            duration: 3000,
+                            direction: 'alternate',
+                            loop: true,
+                            easing: 'easeInOutSine',
+                          });
+                        },
+                      });
+                    },
+                  });
+                }, 4000);
               },
             });
           },
